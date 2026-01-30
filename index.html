@@ -1,94 +1,198 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strona z Karuzelą i Kontaktem</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Synergy ZK – Automatyzacja Produkcji</title>
+  <meta name="description" content="Synergy ZK – automatyzacja produkcji, PLC, robotyka, linie zrobotyzowane." />
 
-<link rel="icon" href="https://github.com/mrzin3/mrzin3/blob/main/favicon.png?raw=true" type="image/png">
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    
-    <style>
-        body {
-            padding-top: 20px;
-        }
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .carousel {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .contact {
-            margin-top: 50px;
-            text-align: center;
-        }
+  <style>
+    :root {
+      --bg-main: #0f172a;
+      --bg-dark: #020617;
+      --accent: #0ea5e9;
+      --accent-soft: #38bdf8;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+    }
 
-        hr {
-            border: none;
-            height: 4px;
-            background-color: orange;
-            width: 80%;
-            margin: 20px auto;
-        }
-        
-    </style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(14,165,233,0.18), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(56,189,248,0.12), transparent 45%),
+        linear-gradient(180deg, #020617 0%, var(--bg-main) 100%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.04)' stroke-width='1'%3E%3Cpath d='M0 60 H120'/%3E%3Cpath d='M60 0 V120'/%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+      background-size: auto, auto, auto, 120px 120px;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    header {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(14,165,233,0.35), transparent 45%),
+        radial-gradient(circle at 70% 60%, rgba(56,189,248,0.25), transparent 50%),
+        linear-gradient(135deg, rgba(2,6,23,0.95), rgba(15,23,42,0.95)),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='rgba(56,189,248,0.25)' stroke-width='1'%3E%3Cpath d='M0 40 H200'/%3E%3Cpath d='M0 100 H200'/%3E%3Cpath d='M0 160 H200'/%3E%3Cpath d='M40 0 V200'/%3E%3Cpath d='M100 0 V200'/%3E%3Cpath d='M160 0 V200'/%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+      background-size: auto, auto, auto, 200px 200px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin-top: 16px;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+    }
+
+    section {
+      max-width: 1100px;
+      margin: auto;
+      padding: 80px 20px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--accent-soft);
+    }
+
+    .about {
+      max-width: 800px;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #020617, #020617dd);
+      border: 1px solid rgba(56,189,248,0.15);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, rgba(56,189,248,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    footer {
+      background: #020617;
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    a {
+      color: var(--accent-soft);
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Logo -->
-    <div class="logo">
-        <img src="https://github.com/mrzin3/mrzin3/blob/main/logo.png?raw=true" alt="Logo firmy" width="200">
-    </div>
+<header>
+  <div>
+    <img src="logo_1200.png" alt="Synergy ZK logo" style="max-width:320px;width:100%;margin-bottom:30px;" />
+    <h1>Automatyzacja produkcji. Mniej ludzi. Więcej efektu.</h1>
+    <p>Projektujemy • Programujemy • Wdrażamy</p>
+  </div>
+</header>
 
+<section>
+  <div class="about">
+    <h2>O firmie</h2>
+    <p>
+      Synergy ZK to firma inżynierska zajmująca się automatyzacją procesów przemysłowych –
+      od prostych układów sterowania PLC po kompletne linie zrobotyzowane.
+      Projektujemy rozwiązania dopasowane do potrzeb naszych klientów.
+    </p>
+  </div>
+</section>
 
-        <!-- Pomarańczowa linia między logo a karuzelą -->
-    <hr>
+<section>
+  <h2>Zakres usług</h2>
+  <div class="services">
+    <div class="card"><h3>AUTOMATYKA</h3>Programowanie i uruchamianie sterowników przemysłowych</div>
+    <div class="card"><h3>ROBOTYKA</h3>Integracja i programowanie robotów przemysłowych</div>
+    <div class="card"><h3>MECHANIKA</h3>Projektowanie maszyn i urządzeń</div>
+    <div class="card"><h3>INTEGRACJA</h3>Łączenie systemów, czujników i napędów</div>
+    <div class="card"><h3>MODERNIZACJE</h3>Unowocześnianie istniejących maszyn i linii</div>
+	<div class="card"><h3>SERVIS</h3>Diagnostyka, uruchomienia, wsparcie techniczne</div>
+  </div>
+</section>
 
-    <!-- Karuzela -->
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="https://github.com/mrzin3/mrzin3/blob/main/zd1.png?raw=true/800x400?text=Zdjęcie+1" class="d-block w-100" alt="Zdjęcie 1">
-            </div>
-            <div class="carousel-item">
-                <img src="https://github.com/mrzin3/mrzin3/blob/main/zd2.png?raw=true/800x400?text=Zdjęcie+2" class="d-block w-100" alt="Zdjęcie 2">
-            </div>
-            <div class="carousel-item">
-                <img src="https://github.com/mrzin3/mrzin3/blob/main/zd3.png?raw=true/800x400?text=Zdjęcie+3" class="d-block w-100" alt="Zdjęcie 3">
-            </div>
-            <div class="carousel-item">
-                <img src="https://github.com/mrzin3/mrzin3/blob/main/zd4.png?raw=true/800x400?text=Zdjęcie+4" class="d-block w-100" alt="Zdjęcie 4">
-            </div>
-            <div class="carousel-item">
-                <img src="https://github.com/mrzin3/mrzin3/blob/main/zd5.png?raw=true/800x400?text=Zdjęcie+5" class="d-block w-100" alt="Zdjęcie 5">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Poprzednie</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Następne</span>
-        </button>
-    </div>
+<section>
+  <h2>Kontakt</h2>
+  <p>
+    📧 <a href="mailto:kontakt@synergyzk.pl">kontakt@synergyzk.pl</a><br>
+    📞 +48 511 561 260<br>
+    📍 Suwałki, Polska
+  </p>
+</section>
 
-        <!-- Pomarańczowa linia między logo a karuzelą -->
-    <hr>
+<footer>
+  © 2026 Synergy ZK · Automatyzacja Produkcji
+</footer>
 
-    <!-- Sekcja kontaktowa -->
-    <div class="contact">
-        <h2>Kontakt</h2>
-        <p><strong>Nazwa firmy:</strong> Synergy ZK</p>
-        <p><strong>Telefon:</strong> +48 511 561 260</p>
-        <p><strong>Email:</strong> kontakt@synergyzk.pl</p>
-        <p><strong>Adres:</strong> ul. Węgierska 19, 16-400 Suwałki</p>
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
